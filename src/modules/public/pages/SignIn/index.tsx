@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Form } from '@unform/web';
 
 import MaskedInput from '../../../../shared/components/MaskedInput';
@@ -7,6 +7,7 @@ import Button from '../../../../shared/components/Button';
 
 import logoImage from '../../assets/images/logo.svg';
 
+import validationScheme from './validations';
 import * as styled from './styles';
 
 interface FormData {
@@ -15,9 +16,16 @@ interface FormData {
 }
 
 const SignIn: React.FC = () => {
-  const handleSubmit = (formData: FormData): void => {
-    console.log(formData);
-  };
+  const handleSubmit = useCallback(
+    async (formData: FormData): Promise<void> => {
+      try {
+        await validationScheme.validate(formData, { abortEarly: false });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    []
+  );
 
   return (
     <styled.Container>
