@@ -33,7 +33,7 @@ export const Content = styled.div`
     flex-direction: column;
     margin: 80px 0 20px;
     text-align: center;
-    width: 340px;
+    width: 400px;
 
     > input + input {
       margin-top: 20px;
