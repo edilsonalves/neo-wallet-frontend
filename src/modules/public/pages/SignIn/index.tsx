@@ -2,6 +2,8 @@ import React, { useRef, useCallback } from 'react';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 
+import { useAuth } from '../../../../shared/hooks/auth';
+
 import MaskedInput from '../../../../shared/components/MaskedInput';
 import Input from '../../../../shared/components/Input';
 import Button from '../../../../shared/components/Button';
@@ -18,7 +20,10 @@ interface FormData {
 }
 
 const SignIn: React.FC = () => {
+  const { user, signIn } = useAuth();
   const formRef = useRef<FormHandles>(null);
+
+  console.log(user);
 
   const handleSubmit = useCallback(
     async (formData: FormData): Promise<void> => {
@@ -26,6 +31,11 @@ const SignIn: React.FC = () => {
         formRef.current?.setErrors({});
 
         await validationScheme.validate(formData, { abortEarly: false });
+
+        await signIn({
+          cpf: formData.cpf,
+          password: formData.password,
+        });
       } catch (error) {
         const errors = getValidationErrors(error);
         formRef.current?.setErrors(errors);
@@ -33,7 +43,7 @@ const SignIn: React.FC = () => {
         console.log(errors);
       }
     },
-    []
+    [signIn]
   );
 
   return (
