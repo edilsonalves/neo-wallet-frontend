@@ -1,4 +1,5 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { useRef, useEffect, InputHTMLAttributes } from 'react';
+import { useField } from '@unform/core';
 import InputMask from 'react-input-mask';
 
 import * as styled from './styles';
@@ -8,10 +9,26 @@ interface MaskedInputProps extends InputHTMLAttributes<HTMLInputElement> {
   mask: string;
 }
 
-const MaskedInput: React.FC<MaskedInputProps> = ({ mask, ...rest }) => {
+const MaskedInput: React.FC<MaskedInputProps> = ({ name, mask, ...rest }) => {
+  const inputRef = useRef(null);
+  const { fieldName, defaultValue, registerField } = useField(name);
+
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      ref: inputRef.current,
+      path: 'value',
+    });
+  }, [fieldName, registerField]);
+
   return (
     <styled.MaskedInput>
-      <InputMask mask={mask} {...rest} />
+      <InputMask
+        ref={inputRef}
+        defaultValue={defaultValue}
+        mask={mask}
+        {...rest}
+      />
     </styled.MaskedInput>
   );
 };

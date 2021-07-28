@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form } from '@unform/web';
 
 import Input from '../../../../shared/components/Input';
 import MaskedInput from '../../../../shared/components/MaskedInput';
@@ -8,7 +9,21 @@ import logoImage from '../../assets/images/logo.svg';
 
 import * as styled from './styles';
 
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  cpf: string;
+  password: string;
+  passwordConfirmation: string;
+}
+
 const SignUp: React.FC = () => {
+  const handleSubmit = (formData: FormData): void => {
+    console.log(formData);
+  };
+
   return (
     <styled.Container>
       <styled.Background />
@@ -16,13 +31,13 @@ const SignUp: React.FC = () => {
       <styled.Content>
         <img src={logoImage} alt="Logo" />
 
-        <form>
+        <Form onSubmit={handleSubmit}>
           <styled.InputGroup>
             <Input name="firstName" placeholder="Nome" />
             <Input name="lastName" placeholder="Sobrenome" />
           </styled.InputGroup>
 
-          <Input name="email" type="email" placeholder="E-mail" />
+          <Input name="email" placeholder="E-mail" />
 
           <styled.InputGroup>
             <MaskedInput
@@ -41,7 +56,7 @@ const SignUp: React.FC = () => {
           />
 
           <Button type="submit">Cadastrar</Button>
-        </form>
+        </Form>
 
         <span>Já tem cadastro?</span>
         <a href="signin">Entrar</a>
