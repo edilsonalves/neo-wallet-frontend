@@ -1,10 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useRef, useCallback } from 'react';
+import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 
 import MaskedInput from '../../../../shared/components/MaskedInput';
 import Input from '../../../../shared/components/Input';
 import Button from '../../../../shared/components/Button';
 
+import { getValidationErrors } from '../../../../shared/utils';
 import logoImage from '../../assets/images/logo.svg';
 
 import validationScheme from './validations';
@@ -16,12 +18,19 @@ interface FormData {
 }
 
 const SignIn: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+
   const handleSubmit = useCallback(
     async (formData: FormData): Promise<void> => {
       try {
+        formRef.current?.setErrors({});
+
         await validationScheme.validate(formData, { abortEarly: false });
       } catch (error) {
-        console.log(error);
+        const errors = getValidationErrors(error);
+        formRef.current?.setErrors(errors);
+
+        console.log(errors);
       }
     },
     []
@@ -34,7 +43,7 @@ const SignIn: React.FC = () => {
       <styled.Content>
         <img src={logoImage} alt="Logo" />
 
-        <Form onSubmit={handleSubmit}>
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <MaskedInput name="cpf" mask="999.999.999-99" placeholder="CPF" />
           <Input name="password" type="password" placeholder="Senha" />
           <Button type="submit">Entrar</Button>

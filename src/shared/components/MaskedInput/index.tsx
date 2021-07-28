@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, InputHTMLAttributes } from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  InputHTMLAttributes,
+} from 'react';
 import { useField } from '@unform/core';
 import InputMask from 'react-input-mask';
 
@@ -11,7 +17,8 @@ interface MaskedInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const MaskedInput: React.FC<MaskedInputProps> = ({ name, mask, ...rest }) => {
   const inputRef = useRef(null);
-  const { fieldName, defaultValue, registerField } = useField(name);
+  const { fieldName, defaultValue, error, registerField } = useField(name);
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     registerField({
@@ -21,15 +28,28 @@ const MaskedInput: React.FC<MaskedInputProps> = ({ name, mask, ...rest }) => {
     });
   }, [fieldName, registerField]);
 
+  const handleFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  const handleBlur = useCallback(() => {
+    setIsFocused(false);
+  }, []);
+
   return (
-    <styled.MaskedInput>
-      <InputMask
-        ref={inputRef}
-        defaultValue={defaultValue}
-        mask={mask}
-        {...rest}
-      />
-    </styled.MaskedInput>
+    <styled.Container isFocused={isFocused}>
+      <styled.MaskedInput>
+        <InputMask
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          ref={inputRef}
+          defaultValue={defaultValue}
+          mask={mask}
+          {...rest}
+        />
+      </styled.MaskedInput>
+      {error && <span>{error}</span>}
+    </styled.Container>
   );
 };
 

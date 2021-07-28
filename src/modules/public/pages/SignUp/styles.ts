@@ -35,7 +35,11 @@ export const Content = styled.div`
     text-align: center;
     width: 400px;
 
-    > input + input {
+    button {
+      margin-top: 30px;
+    }
+
+    > div + div {
       margin-top: 20px;
     }
   }
@@ -62,7 +66,6 @@ export const Content = styled.div`
 export const InputGroup = styled.div`
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
 
   input + & {
     margin-top: 20px;

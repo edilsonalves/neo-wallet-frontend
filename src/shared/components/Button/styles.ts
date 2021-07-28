@@ -8,7 +8,6 @@ export const Button = styled.button`
   font-weight: 500;
   height: 60px;
   width: 100%;
-  margin-top: 30px;
   padding: 0 16px;
   transition: opacity 0.3s;
 

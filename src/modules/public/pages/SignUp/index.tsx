@@ -1,9 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useRef, useCallback } from 'react';
+import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 
 import Input from '../../../../shared/components/Input';
 import MaskedInput from '../../../../shared/components/MaskedInput';
 import Button from '../../../../shared/components/Button';
+import { getValidationErrors } from '../../../../shared/utils';
 
 import logoImage from '../../assets/images/logo.svg';
 
@@ -21,12 +23,19 @@ interface FormData {
 }
 
 const SignUp: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+
   const handleSubmit = useCallback(
     async (formData: FormData): Promise<void> => {
       try {
+        formRef.current?.setErrors({});
+
         await validationScheme.validate(formData, { abortEarly: false });
       } catch (error) {
-        console.log(error);
+        const errors = getValidationErrors(error);
+        formRef.current?.setErrors(errors);
+
+        console.log(errors);
       }
     },
     []
@@ -39,7 +48,7 @@ const SignUp: React.FC = () => {
       <styled.Content>
         <img src={logoImage} alt="Logo" />
 
-        <Form onSubmit={handleSubmit}>
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <styled.InputGroup>
             <Input name="firstName" placeholder="Nome" />
             <Input name="lastName" placeholder="Sobrenome" />
