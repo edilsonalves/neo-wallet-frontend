@@ -44,7 +44,7 @@ export const Content = styled.div`
     }
   }
 
-  span {
+  > span {
     color: ${(props) => props.theme.colors.grey5};
     font-size: 14px;
     margin-top: 30px;

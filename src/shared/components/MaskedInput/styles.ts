@@ -1,6 +1,9 @@
 import styled, { css } from 'styled-components';
 
+import Tooltip from '../Tooltip';
+
 interface ContainerProps {
+  isErrored: boolean;
   isFocused: boolean;
 }
 
@@ -15,6 +18,12 @@ export const Container = styled.div<ContainerProps>`
   width: 100%;
   padding: 10px 16px;
   transition: border-color 0.3s;
+
+  ${(props) =>
+    props.isErrored &&
+    css`
+      border-color: ${(props) => props.theme.colors.coral};
+    `}
 
   ${(props) =>
     props.isFocused &&
@@ -34,5 +43,16 @@ export const MaskedInput = styled.div`
     &::placeholder {
       color: ${(props) => props.theme.colors.grey4};
     }
+  }
+`;
+
+export const Error = styled(Tooltip)`
+  margin-left: 14px;
+
+  svg {
+    color: ${(props) => props.theme.colors.coral};
+    font-size: 18px;
+    margin: 0;
+    vertical-align: middle;
   }
 `;

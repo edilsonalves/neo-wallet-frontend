@@ -6,6 +6,7 @@ import React, {
   InputHTMLAttributes,
 } from 'react';
 import { useField } from '@unform/core';
+import { FiAlertCircle } from 'react-icons/fi';
 
 import * as styled from './styles';
 
@@ -35,7 +36,7 @@ const Input: React.FC<InputProps> = ({ name, ...rest }) => {
   }, []);
 
   return (
-    <styled.Container isFocused={isFocused}>
+    <styled.Container isErrored={!!error} isFocused={isFocused}>
       <styled.Input
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -43,7 +44,11 @@ const Input: React.FC<InputProps> = ({ name, ...rest }) => {
         defaultValue={defaultValue}
         {...rest}
       />
-      {error && <span>{error}</span>}
+      {error && (
+        <styled.Error title={error}>
+          <FiAlertCircle />
+        </styled.Error>
+      )}
     </styled.Container>
   );
 };

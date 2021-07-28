@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import { useField } from '@unform/core';
 import InputMask from 'react-input-mask';
+import { FiAlertCircle } from 'react-icons/fi';
 
 import * as styled from './styles';
 
@@ -37,7 +38,7 @@ const MaskedInput: React.FC<MaskedInputProps> = ({ name, mask, ...rest }) => {
   }, []);
 
   return (
-    <styled.Container isFocused={isFocused}>
+    <styled.Container isErrored={!!error} isFocused={isFocused}>
       <styled.MaskedInput>
         <InputMask
           onFocus={handleFocus}
@@ -48,7 +49,11 @@ const MaskedInput: React.FC<MaskedInputProps> = ({ name, mask, ...rest }) => {
           {...rest}
         />
       </styled.MaskedInput>
-      {error && <span>{error}</span>}
+      {error && (
+        <styled.Error title={error}>
+          <FiAlertCircle />
+        </styled.Error>
+      )}
     </styled.Container>
   );
 };
