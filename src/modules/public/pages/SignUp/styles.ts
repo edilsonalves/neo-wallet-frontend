@@ -35,7 +35,7 @@ export const Content = styled.div`
     text-align: center;
     width: 340px;
 
-    input + input {
+    > input + input {
       margin-top: 20px;
     }
   }
@@ -56,5 +56,15 @@ export const Content = styled.div`
     &:hover {
       color: ${(props) => props.theme.colors.dark};
     }
+  }
+`;
+
+export const InputGroup = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  input + & {
+    margin-top: 20px;
   }
 `;
