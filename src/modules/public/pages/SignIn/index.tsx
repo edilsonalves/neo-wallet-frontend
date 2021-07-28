@@ -1,5 +1,8 @@
 import React from 'react';
 
+import Input from '../../../../shared/components/Input';
+import Button from '../../../../shared/components/Button';
+
 import logoImage from '../../assets/images/logo.svg';
 
 import * as styled from './styles';
@@ -13,13 +16,13 @@ const SignIn: React.FC = () => {
         <img src={logoImage} alt="Logo" />
 
         <form>
-          <input placeholder="CPF" />
-          <input type="password" placeholder="Senha" />
-          <button type="submit">Entrar</button>
-
-          <span>Não tem uma cadastro?</span>
-          <a href="signup">Criar cadastro</a>
+          <Input name="cpf" placeholder="CPF" />
+          <Input name="password" type="password" placeholder="Senha" />
+          <Button type="submit">Entrar</Button>
         </form>
+
+        <span>Não tem uma cadastro?</span>
+        <a href="signup">Criar cadastro</a>
       </styled.Content>
     </styled.Container>
   );

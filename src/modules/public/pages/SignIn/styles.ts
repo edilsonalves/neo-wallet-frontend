@@ -23,65 +23,30 @@ export const Content = styled.div`
   form {
     display: flex;
     flex-direction: column;
-    margin: 80px 0;
+    margin: 80px 0 20px;
     text-align: center;
     width: 340px;
 
-    input {
-      border: 2px solid ${(props) => props.theme.colors.grey2};
-      border-radius: 5px;
-      color: ${(props) => props.theme.colors.grey5};
-      height: 60px;
-      width: 100%;
-      padding: 10px 16px;
-      transition: border-color 0.3s;
-
-      &:focus {
-        border-color: ${(props) => props.theme.colors.primary};
-      }
-
-      &::placeholder {
-        color: ${(props) => props.theme.colors.grey4};
-      }
-
-      & + input {
-        margin-top: 20px;
-      }
+    input + input {
+      margin-top: 20px;
     }
+  }
 
-    button {
-      background-color: ${(props) => props.theme.colors.primary};
-      border: none;
-      border-radius: 5px;
-      color: ${(props) => props.theme.colors.light};
-      font-weight: 500;
-      height: 60px;
-      width: 100%;
-      margin-top: 30px;
-      padding: 0 16px;
-      transition: opacity 0.3s;
+  span {
+    color: ${(props) => props.theme.colors.grey5};
+    font-size: 14px;
+    margin-top: 30px;
+  }
 
-      &:hover {
-        opacity: 0.9;
-      }
-    }
+  a {
+    color: ${(props) => props.theme.colors.grey5};
+    font-size: 14px;
+    margin-top: 8px;
+    text-decoration: none;
+    transition: color 0.3s;
 
-    span {
-      color: ${(props) => props.theme.colors.grey5};
-      font-size: 14px;
-      margin-top: 30px;
-    }
-
-    a {
-      color: ${(props) => props.theme.colors.grey5};
-      font-size: 14px;
-      margin-top: 8px;
-      text-decoration: none;
-      transition: color 0.3s;
-
-      &:hover {
-        color: ${(props) => props.theme.colors.dark};
-      }
+    &:hover {
+      color: ${(props) => props.theme.colors.dark};
     }
   }
 `;
