@@ -19,13 +19,11 @@ const validationScheme = Yup.object().shape({
     .required('Campo obrigatório')
     .test('cpf', 'Digite um CPF válido', (value) => isValidCpf(value)),
   password: Yup.string().min(8, 'A senha de conter no mínimo 8 caracteres'),
-  passwordConfirmation: Yup.string().test(
-    'passwords-match',
-    'As senhas não coincidem',
-    function (value) {
+  passwordConfirmation: Yup.string()
+    .required('Campo obrigatório')
+    .test('passwords-match', 'As senhas não coincidem', function (value) {
       return this.parent.password === value;
-    }
-  ),
+    }),
 });
 
 export default validationScheme;
