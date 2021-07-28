@@ -1,11 +1,13 @@
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
 
-const App: React.FC = () => {
-  return (
-    <div>
-      <h1>Hello, World</h1>
-    </div>
-  );
-};
+import theme from './shared/styles/theme';
+import GlobalStyle from './shared/styles/global';
+
+const App: React.FC = () => (
+  <ThemeProvider theme={theme}>
+    <GlobalStyle />
+  </ThemeProvider>
+);
 
 export default App;
