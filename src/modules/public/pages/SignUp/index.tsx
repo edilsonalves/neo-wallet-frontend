@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Input from '../../../../shared/components/Input';
+import MaskedInput from '../../../../shared/components/MaskedInput';
 import Button from '../../../../shared/components/Button';
 
 import logoImage from '../../assets/images/logo.svg';
@@ -24,8 +25,12 @@ const SignUp: React.FC = () => {
           <Input name="email" type="email" placeholder="E-mail" />
 
           <styled.InputGroup>
-            <Input name="phone" placeholder="Telefone" />
-            <Input name="cpf" placeholder="CPF" />
+            <MaskedInput
+              name="phone"
+              mask="(99) 99999-9999"
+              placeholder="Telefone"
+            />
+            <MaskedInput name="cpf" mask="999.999.999-99" placeholder="CPF" />
           </styled.InputGroup>
 
           <Input name="password" type="password" placeholder="Senha" />
