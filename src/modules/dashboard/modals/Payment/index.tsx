@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 import { ValidationError } from 'yup';
 import validationScheme from './validations';
 import { useAuth } from '../../../../shared/hooks/auth';
+import { useMain } from '../../../../shared/hooks/main';
 import { getValidationErrors } from '../../../../shared/utils';
 import { createPayment } from '../../../../shared/services/transaction';
 
@@ -23,7 +24,8 @@ interface FormData {
 
 const Payment: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { user, syncUser } = useAuth();
+  const { user } = useAuth();
+  const { handleTransaction } = useMain();
 
   const handleSubmit = useCallback(
     async (formData: FormData): Promise<void> => {
@@ -31,21 +33,20 @@ const Payment: React.FC = () => {
         formRef.current?.setErrors({});
 
         await validationScheme.validate(formData, { abortEarly: false });
-        const payment = await createPayment({
+        const transaction = await createPayment({
           accountId: user.account.id,
           barCode: formData.barCode,
           description: formData.description,
           value: formData.value,
         });
 
-        console.log(payment)
-
-        // const transactions = [...user.account.transactions, payment];
-        // const account = { ...user.account, transactions };
-        // syncUser({ ...user, account });
-
-        toast.success('Pagamento realizado com sucesso!');
+        if (transaction) {
+          handleTransaction(transaction);
+          toast.success('Pagamento realizado com sucesso!');
+        }
       } catch (error) {
+        console.log(error);
+
         if (error instanceof ValidationError) {
           const errors = getValidationErrors(error);
 
@@ -57,7 +58,7 @@ const Payment: React.FC = () => {
         }
       }
     },
-    [user]
+    [user, handleTransaction]
   );
 
   return (

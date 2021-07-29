@@ -1,11 +1,10 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import currency from 'currency.js';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 
 import { useAuth } from '../../../../shared/hooks/auth';
-import Transaction from '../../../../shared/entities/transaction';
-import { getTransactions } from '../../../../shared/services/transaction';
+import { useMain } from '../../../../shared/hooks/main';
 import {
   TransactionTypeEnum,
   transactionType,
@@ -21,22 +20,12 @@ import { useEffect } from 'react';
 const Dashboard: React.FC = () => {
   const history = useHistory();
   const { user, signOut } = useAuth();
-  const [transactions, setTransactions] = useState<Transaction[]>();
+  const { balance, income, transactions, syncTransactions } = useMain();
 
   useEffect(() => {
-    getTransactions().then((transactions) => {
-      setTransactions(transactions);
-    });
+    syncTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const userData = useMemo(
-    () => ({
-      name: `${user.firstName} ${user.lastName}`,
-      balance: user.account.balance.toString(),
-      income: user.account.income.toString(),
-    }),
-    [user]
-  );
 
   const transactionList = useMemo(
     () =>
@@ -65,7 +54,7 @@ const Dashboard: React.FC = () => {
       <styled.Content>
         <styled.TopBar>
           <styled.NameBox>
-            {userData.name}
+            {`${user.firstName} ${user.lastName}`}
             <button onClick={handleSignOut}>Sair</button>
           </styled.NameBox>
 
@@ -77,8 +66,8 @@ const Dashboard: React.FC = () => {
         <styled.CardArea>
           <div>
             <styled.CardRow>
-              <Card title="Saldo" value={userData.balance} />
-              <Card title="Rendimento" value={userData.income} />
+              <Card title="Saldo" value={balance.toString()} />
+              <Card title="Rendimento" value={income.toString()} />
             </styled.CardRow>
 
             <styled.CardRow>

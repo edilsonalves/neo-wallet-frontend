@@ -3,6 +3,8 @@ import { useModal } from 'react-brave-modal';
 import currency from 'currency.js';
 import { MdAttachMoney } from 'react-icons/md';
 
+import Deposit from '../../modals/Deposit';
+import Rescue from '../../modals/Rescue';
 import Payment from '../../modals/Payment';
 import { TransactionTypeEnum } from '../../../../shared/entities/transaction';
 
@@ -33,9 +35,9 @@ const Card: React.FC<CardProps> = ({
   const actionModal = useMemo(() => {
     switch (action) {
       case TransactionTypeEnum.DEPOSIT:
-        return <h1>{action}</h1>;
+        return <Deposit />;
       case TransactionTypeEnum.RESCUE:
-        return <h1>{action}</h1>;
+        return <Rescue />;
       case TransactionTypeEnum.PAYMENT:
         return <Payment />;
       default:
