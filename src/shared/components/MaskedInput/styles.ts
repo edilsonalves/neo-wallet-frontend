@@ -33,6 +33,8 @@ export const Container = styled.div<ContainerProps>`
 `;
 
 export const MaskedInput = styled.div`
+  width: 100%;
+
   input {
     background-color: transparent;
     border: none;
