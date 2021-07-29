@@ -40,7 +40,7 @@ const SignUp: React.FC = () => {
         await createUser(formData);
 
         history.push('/');
-        toast.success('Cadastro criado com sucesso!');
+        toast.success('Cadastro realizado com sucesso!');
       } catch (error) {
         if (error instanceof ValidationError) {
           const errors = getValidationErrors(error);
