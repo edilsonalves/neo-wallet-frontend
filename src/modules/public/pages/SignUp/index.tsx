@@ -1,11 +1,13 @@
 import React, { useRef, useCallback } from 'react';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
+import { useHistory, Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 import { ValidationError } from 'yup';
 import validationScheme from './validations';
 import { getValidationErrors } from '../../../../shared/utils';
+import { createUser } from '../../../../shared/services/user';
 
 import Input from '../../../../shared/components/Input';
 import MaskedInput from '../../../../shared/components/MaskedInput';
@@ -27,6 +29,7 @@ interface FormData {
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
 
   const handleSubmit = useCallback(
     async (formData: FormData): Promise<void> => {
@@ -34,6 +37,10 @@ const SignUp: React.FC = () => {
         formRef.current?.setErrors({});
 
         await validationScheme.validate(formData, { abortEarly: false });
+        await createUser(formData);
+
+        history.push('/');
+        toast.success('Cadastro criado com sucesso!');
       } catch (error) {
         if (error instanceof ValidationError) {
           const errors = getValidationErrors(error);
@@ -46,7 +53,7 @@ const SignUp: React.FC = () => {
         }
       }
     },
-    []
+    [history]
   );
 
   return (
@@ -84,7 +91,7 @@ const SignUp: React.FC = () => {
         </Form>
 
         <span>Já tem cadastro?</span>
-        <a href="signin">Entrar</a>
+        <Link to="/">Entrar</Link>
       </styled.Content>
     </styled.Container>
   );

@@ -1,6 +1,7 @@
 import React, { useRef, useCallback } from 'react';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
+import { useHistory, Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 import { ValidationError } from 'yup';
@@ -23,8 +24,9 @@ interface FormData {
 }
 
 const SignIn: React.FC = () => {
-  const { signIn } = useAuth();
   const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
+  const { signIn } = useAuth();
 
   const handleSubmit = useCallback(
     async (formData: FormData): Promise<void> => {
@@ -32,11 +34,12 @@ const SignIn: React.FC = () => {
         formRef.current?.setErrors({});
 
         await validationScheme.validate(formData, { abortEarly: false });
-
         await signIn({
           cpf: formData.cpf,
           password: formData.password,
         });
+
+        history.push('/dashboard');
       } catch (error) {
         if (error instanceof ValidationError) {
           const errors = getValidationErrors(error);
@@ -49,7 +52,7 @@ const SignIn: React.FC = () => {
         }
       }
     },
-    [signIn]
+    [signIn, history]
   );
 
   return (
@@ -66,7 +69,7 @@ const SignIn: React.FC = () => {
         </Form>
 
         <span>Não tem uma cadastro?</span>
-        <a href="signup">Criar cadastro</a>
+        <Link to="/signup">Criar cadastro</Link>
       </styled.Content>
     </styled.Container>
   );
