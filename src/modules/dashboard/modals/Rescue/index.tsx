@@ -42,11 +42,8 @@ const Rescue: React.FC = () => {
           toast.success('Resgate realizado com sucesso!');
         }
       } catch (error) {
-        console.log(error);
-
         if (error instanceof ValidationError) {
           const errors = getValidationErrors(error);
-
           formRef.current?.setErrors(errors);
         } else if (error.response) {
           toast.error(error.response.data.message);
