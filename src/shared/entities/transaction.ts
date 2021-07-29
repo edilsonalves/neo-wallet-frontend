@@ -9,11 +9,11 @@ interface Transaction {
   description?: string;
   value: number;
   account: Account;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
 }
 
-enum TransactionTypeEnum {
+export enum TransactionTypeEnum {
   DEPOSIT = 'deposit',
   RESCUE = 'rescue',
   PAYMENT = 'payment',
@@ -21,7 +21,15 @@ enum TransactionTypeEnum {
   INCOMING_TRANSFER = 'incomingTransfer',
 }
 
-enum TransactionStatusEnum {
+export const transactionType = {
+  deposit: 'Depósito',
+  rescue: 'Resgate',
+  payment: 'Pagamento',
+  outgoingTransfer: 'Transferência de entrada',
+  incomingTransfer: 'Transferência de saída',
+};
+
+export enum TransactionStatusEnum {
   SUCCESS = 'success',
   FAILURE = 'failure',
   SCHEDULED = 'scheduled',

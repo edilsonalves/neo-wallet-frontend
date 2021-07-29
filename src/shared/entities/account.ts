@@ -8,8 +8,8 @@ interface Account {
   income: number;
   user: User;
   transactions: Transaction[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
 }
 
 export default Account;

@@ -7,8 +7,8 @@ interface User {
   email: string;
   phone: string;
   account: Account;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
 }
 
 export default User;
