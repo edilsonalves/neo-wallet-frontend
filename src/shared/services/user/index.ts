@@ -1,3 +1,3 @@
-import { createUser } from './userService';
+import { createUser, getUser } from './userService';
 
-export { createUser };
+export { createUser, getUser };

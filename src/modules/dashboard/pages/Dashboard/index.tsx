@@ -19,10 +19,11 @@ import { useEffect } from 'react';
 
 const Dashboard: React.FC = () => {
   const history = useHistory();
-  const { user, signOut } = useAuth();
+  const { user, syncUser, signOut } = useAuth();
   const { balance, income, transactions, syncTransactions } = useMain();
 
   useEffect(() => {
+    syncUser();
     syncTransactions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
