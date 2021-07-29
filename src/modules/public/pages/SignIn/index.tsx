@@ -1,6 +1,11 @@
 import React, { useRef, useCallback } from 'react';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
+import { toast } from 'react-hot-toast';
+
+import { ValidationError } from 'yup';
+import validationScheme from './validations';
+import { getValidationErrors } from '../../../../shared/utils';
 
 import { useAuth } from '../../../../shared/hooks/auth';
 
@@ -8,10 +13,8 @@ import MaskedInput from '../../../../shared/components/MaskedInput';
 import Input from '../../../../shared/components/Input';
 import Button from '../../../../shared/components/Button';
 
-import { getValidationErrors } from '../../../../shared/utils';
 import logoImage from '../../assets/images/logo.svg';
 
-import validationScheme from './validations';
 import * as styled from './styles';
 
 interface FormData {
@@ -20,10 +23,8 @@ interface FormData {
 }
 
 const SignIn: React.FC = () => {
-  const { user, signIn } = useAuth();
+  const { signIn } = useAuth();
   const formRef = useRef<FormHandles>(null);
-
-  console.log(user);
 
   const handleSubmit = useCallback(
     async (formData: FormData): Promise<void> => {
@@ -37,10 +38,15 @@ const SignIn: React.FC = () => {
           password: formData.password,
         });
       } catch (error) {
-        const errors = getValidationErrors(error);
-        formRef.current?.setErrors(errors);
+        if (error instanceof ValidationError) {
+          const errors = getValidationErrors(error);
 
-        console.log(errors);
+          formRef.current?.setErrors(errors);
+        } else if (error.response) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error('Entre em contato com o administrador');
+        }
       }
     },
     [signIn]

@@ -1,15 +1,18 @@
 import React, { useRef, useCallback } from 'react';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
+import { toast } from 'react-hot-toast';
+
+import { ValidationError } from 'yup';
+import validationScheme from './validations';
+import { getValidationErrors } from '../../../../shared/utils';
 
 import Input from '../../../../shared/components/Input';
 import MaskedInput from '../../../../shared/components/MaskedInput';
 import Button from '../../../../shared/components/Button';
-import { getValidationErrors } from '../../../../shared/utils';
 
 import logoImage from '../../assets/images/logo.svg';
 
-import validationScheme from './validations';
 import * as styled from './styles';
 
 interface FormData {
@@ -32,10 +35,15 @@ const SignUp: React.FC = () => {
 
         await validationScheme.validate(formData, { abortEarly: false });
       } catch (error) {
-        const errors = getValidationErrors(error);
-        formRef.current?.setErrors(errors);
+        if (error instanceof ValidationError) {
+          const errors = getValidationErrors(error);
 
-        console.log(errors);
+          formRef.current?.setErrors(errors);
+        } else if (error.response) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error('Entre em contato com o administrador');
+        }
       }
     },
     []
