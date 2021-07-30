@@ -25,8 +25,8 @@ export const transactionType = {
   deposit: 'Depósito',
   rescue: 'Resgate',
   payment: 'Pagamento',
-  outgoingTransfer: 'Transferência de entrada',
-  incomingTransfer: 'Transferência de saída',
+  outgoingTransfer: 'Transferência de saída',
+  incomingTransfer: 'Transferência de entrada',
 };
 
 export enum TransactionStatusEnum {

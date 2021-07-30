@@ -6,6 +6,7 @@ import { MdAttachMoney } from 'react-icons/md';
 import Deposit from '../../modals/Deposit';
 import Rescue from '../../modals/Rescue';
 import Payment from '../../modals/Payment';
+import Transfer from '../../modals/Transfer';
 import { TransactionTypeEnum } from '../../../../shared/entities/transaction';
 
 import * as styled from './styles';
@@ -14,7 +15,6 @@ interface CardProps {
   title: string;
   textButton?: string;
   value?: string;
-  disabled?: boolean;
   action?: TransactionTypeEnum;
 }
 
@@ -22,7 +22,6 @@ const Card: React.FC<CardProps> = ({
   title,
   textButton,
   value,
-  disabled,
   action,
 }) => {
   const { showModal } = useModal();
@@ -40,6 +39,8 @@ const Card: React.FC<CardProps> = ({
         return <Rescue />;
       case TransactionTypeEnum.PAYMENT:
         return <Payment />;
+      case TransactionTypeEnum.OUTGOING_TRANSFER:
+        return <Transfer />
       default:
         break;
     }
@@ -55,7 +56,7 @@ const Card: React.FC<CardProps> = ({
   }, [action, actionModal, showModal]);
 
   return (
-    <styled.Container disabled={disabled ?? false}>
+    <styled.Container>
       <styled.Icon>
         <MdAttachMoney />
       </styled.Icon>

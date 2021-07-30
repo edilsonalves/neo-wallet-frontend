@@ -1,10 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-interface ContainerProps {
-  disabled: boolean;
-}
-
-export const Container = styled.div<ContainerProps>`
+export const Container = styled.div`
   display: flex;
   align-items: center;
   background-color: ${(props) => props.theme.colors.light};
@@ -13,17 +9,6 @@ export const Container = styled.div<ContainerProps>`
   height: 150px;
   width: 290px;
   padding: 40px;
-
-  ${(props) =>
-    props.disabled &&
-    css`
-      opacity: 0.5;
-
-      &,
-      button {
-        cursor: not-allowed;
-      }
-    `}
 `;
 
 export const Icon = styled.div`

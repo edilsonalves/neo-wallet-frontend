@@ -18,6 +18,13 @@ interface CreatePayment {
   value: string;
 }
 
+interface CreateTransfer {
+  accountId: string;
+  fakeKey: string;
+  description?: string;
+  value: string;
+}
+
 const createDeposit = async (data: CreateDeposit): Promise<Transaction> => {
   const response = await api.post<Transaction>('transactions/deposit', data);
   const transaction = response.data;
@@ -39,6 +46,13 @@ const createPayment = async (data: CreatePayment): Promise<Transaction> => {
   return transaction;
 };
 
+const createTransfer = async (data: CreateTransfer): Promise<Transaction> => {
+  const response = await api.post<Transaction>('transactions/transfer', data);
+  const transaction = response.data;
+
+  return transaction;
+};
+
 const getTransactions = async (): Promise<Transaction[]> => {
   const response = await api.get<Transaction[]>('transactions');
   const transactions = response.data;
@@ -46,4 +60,4 @@ const getTransactions = async (): Promise<Transaction[]> => {
   return transactions;
 };
 
-export { createDeposit, createRescue, createPayment, getTransactions };
+export { createDeposit, createRescue, createPayment, createTransfer, getTransactions };

@@ -54,6 +54,11 @@ const Dashboard: React.FC = () => {
 
       <styled.Content>
         <styled.TopBar>
+          <strong>
+            Chave da conta: {`  `}
+            {user.account.fakeKey}
+          </strong>
+
           <styled.NameBox>
             {`${user.firstName} ${user.lastName}`}
             <button onClick={handleSignOut}>Sair</button>
@@ -89,11 +94,11 @@ const Dashboard: React.FC = () => {
                 title="Pagamento"
                 textButton="novo pagamento"
                 action={TransactionTypeEnum.PAYMENT}
-              />
+                />
               <Card
                 title="Transferência"
                 textButton="nova transferência"
-                disabled
+                action={TransactionTypeEnum.OUTGOING_TRANSFER}
               />
             </styled.CardRow>
           </div>

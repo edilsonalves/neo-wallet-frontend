@@ -38,11 +38,15 @@ export const Content = styled.div`
 export const TopBar = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   background-color: ${(props) => props.theme.colors.light};
   border-bottom: 1px solid ${(props) => props.theme.colors.grey2};
   height: 100px;
   padding: 0 30px;
+
+  strong {
+    color: ${(props) => props.theme.colors.purple};
+  }
 `;
 
 export const NameBox = styled.span`
@@ -51,6 +55,7 @@ export const NameBox = styled.span`
   align-items: flex-end;
   color: ${(props) => props.theme.colors.dark};
   font-weight: 500;
+  margin-left: auto;
 
   button {
     background-color: transparent;
