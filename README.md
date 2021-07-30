@@ -27,3 +27,13 @@ $ yarn start
 
 - [React](https://reactjs.org)
 - [TypeScript](https://typescriptlang.org)
+
+## Utils
+
+### Register with a false CPF
+
+- [CPF generator](https://4devs.com.br/gerador_de_cpf)
+
+### Create fake barcode payment (always use version 4)
+
+- [UUID generator](https://uuidgenerator.net/version4)
